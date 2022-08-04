@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const dotenv = require('dotenv').config({ path: __dirname + '/.env' })
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 
 module.exports = {
@@ -12,7 +13,6 @@ module.exports = {
     filename: "[name].js",
     path: path.resolve(__dirname, 'dist'),
   },
-  mode: "development",
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.png', '.jpg'],
     fallback: {
@@ -77,6 +77,7 @@ module.exports = {
         'process.env': JSON.stringify(dotenv.parsed),
         'process.env.NODE_ENV': JSON.stringify(isDevelopment ? 'development' : 'production'),
     }),
-    new MiniCssExtractPlugin()
+    new MiniCssExtractPlugin(),
+    new CleanWebpackPlugin()
   ],
 }
