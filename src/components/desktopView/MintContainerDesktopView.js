@@ -5,6 +5,7 @@ import {useState, useEffect} from 'react'
 import ProgressBar from "../Progressbar"
 import MintPhase from "../MintPhase"
 import { mintToken } from "../../libs/Mint"
+import MintButton from "../MintButton"
 
 
 export default function MintContainerMobileView({completed, setCompleted, candyMachine, walletAddress, whitelistLaunchDate}){
@@ -59,22 +60,15 @@ export default function MintContainerMobileView({completed, setCompleted, candyM
                     <MintPhase candyMachine={candyMachine} launchDate={whitelistLaunchDate} phase={'Public'}/>
                 </div>
 
-                <div className="mt-10 flex justify-center w-full pb-6">
-                    {walletAddress ? 
-                        (!candyMachine.state.isSoldout && candyMachine.state.isActive) ?
-                            <button className="bg-plGrey text-black rounded text-white w-[75%]  p-2 mt-5" onClick={() => mintToken(walletAddress, candyMachine)}>
-                                Mint NFT
-                            </button>
-                        :
-                            <button className="bg-darkGrey rounded text-white w-[75%]  p-2 mt-5 border-plDarkYellow border-[1px]" disabled>
-                                Sold Out
-                            </button>
-                    :
+                {!walletAddress ? 
+                    <div className="mt-10 flex justify-center w-full pb-6">
                         <button className="bg-darkGrey rounded text-white w-[75%]  p-2 mt-5 border-plDarkYellow border-[1px]" disabled>
-                            Connect your Wallet
+                                Connect A Wallet
                         </button>
-                    }
-                </div>
+                    </div>
+                    :
+                    <MintButton walletAddress={walletAddress} candyMachine={candyMachine}/>
+                }
             </div>
             <div className="pt-5 flex flex-col items-center w-[30%]">
                 <img src={image_0} alt="preview_1" className={`${active === 0 ? "block" : "hidden"} rounded-lg shadow-lg w-[90%] hover:w-[100%]`} />

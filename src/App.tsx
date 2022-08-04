@@ -10,13 +10,11 @@ import {
     TorusWalletAdapter,
 } from '@solana/wallet-adapter-wallets';
 import { clusterApiUrl } from '@solana/web3.js';
-import React, { FC, ReactNode, useEffect, useMemo, useState } from 'react';
+import React, { FC, ReactNode, useMemo, useState } from 'react';
 import CandyMachine from './CandyMachine/CandyMachine';
 import MintContainerDesktopView from './components/desktopView/MintContainerDesktopView';
 import MintContainerMobileView from './components/mobileView/MintContainerMobileView';
 import WalletButton from './components/WalletButton';
-import bg from "./assets/bg.jpg"
-
 
 require('./App.css');
 require('@solana/wallet-adapter-react-ui/styles.css');
@@ -74,12 +72,14 @@ const Content: FC = () => {
 
     return (
         <div className="App">
-            <div className='absolute top-4 right-10 bg-indigo-900 rounded hidden lg:block'>
+            {/* Desktop wallet connection */}
+            <div className='absolute lg:top-4 lg:right-10 top-2 right-0 bg-indigo-900 rounded'>
                 <WalletMultiButton />
             </div>
-            <div className='absolute top-4 right-5 bg-plDarkGrey rounded block lg:hidden'>
-                {!publicKey && <WalletButton /> }
-            </div>
+
+            {/* Mobile Wallet */}
+            {/* <WalletButton />  */}
+
             <CandyMachine walletAddress={publicKey} candyMachine={candyMachine} setCandyMachine={setCandyMachine}/> 
 
             <div id='mobile-view' className='h-full w-full block lg:hidden'>

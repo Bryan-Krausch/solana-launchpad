@@ -8,6 +8,7 @@ export default function MintPhase({candyMachine, launchDate, phase}){
 
     console.log(publicDropDate);
     console.log(whitelistDropDate);
+
     const renderWhitelist = candyMachine.state.isSoldOut ? "Sold out" : ((phase === 'Whitelist') && whitelistDropDate > currentDate) ? <CountdownTimer candyMachine={candyMachine} dropDate={whitelistDropDate} /> : "Live"
     const renderPublic = candyMachine.state.isSoldOut ? "Sold out" : ((phase === 'Public') && publicDropDate > currentDate) ? <CountdownTimer candyMachine={candyMachine} dropDate={publicDropDate} /> : "Live"
     return(
@@ -18,10 +19,10 @@ export default function MintPhase({candyMachine, launchDate, phase}){
             </div>
             <div className="text-white flex gap-x-[4px] lg:gap-x-1 text-xs md:text-sm lg:text-base">
                 <div>{`Whitelist Supply ${process.env.REACT_APP_SUPPLY}`}</div>
-                <div className=" hidden lg:visible"> - </div>
+                <div className=" hidden lg:block"> - </div>
                 <div>Max Mint 5 per person </div>
-                <div className=" hidden lg:visible"> - </div>
-                <div>{` ${process.env.REACT_APP_PUBLIC_PRICE} Sol`}</div>
+                <div className=" hidden lg:block"> - </div>
+                <div>{` ${phase === "Whitelist" ? process.env.REACT_APP_WHITELIST_PRICE : process.env.REACT_APP_PUBLIC_PRICE} Sol`}</div>
             </div>
         </div>
     )

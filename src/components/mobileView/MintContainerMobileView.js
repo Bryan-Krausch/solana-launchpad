@@ -4,7 +4,7 @@ import image_2 from "../../assets/2.png"
 import {useState, useEffect} from 'react'
 import ProgressBar from "../Progressbar"
 import MintPhase from "../MintPhase"
-import { mintToken } from "../../libs/Mint"
+import MintButton from "../MintButton"
 
 
 export default function MintContainerMobileView({completed, setCompleted, candyMachine, walletAddress, whitelistLaunchDate}){
@@ -63,22 +63,15 @@ export default function MintContainerMobileView({completed, setCompleted, candyM
                 <ProgressBar completed={completed}/>
             </div>
 
-            <div className="mt-5 flex justify-center w-full lg:hidden">
-                {walletAddress ? 
-                    (!candyMachine.state.isSoldout && candyMachine.state.isActive) ?
-                        <button className="bg-plGrey text-black rounded text-white w-[75%]  p-2 mt-5" onClick={() => mintToken(walletAddress, candyMachine)}>
-                            Mint NFT
-                        </button>
-                    :
-                        <button className="bg-darkGrey rounded text-white w-[75%]  p-2 mt-5 border-plDarkYellow border-[1px]" disabled>
-                            Sold Out
-                        </button>
-                :
+            {!walletAddress ? 
+                <div className="mt-10 flex justify-center w-full pb-6">
                     <button className="bg-darkGrey rounded text-white w-[75%]  p-2 mt-5 border-plDarkYellow border-[1px]" disabled>
-                        Connect your Wallet
+                            Connect A Wallet
                     </button>
-                }
-            </div>
+                </div>
+                :
+                <MintButton walletAddress={walletAddress} candyMachine={candyMachine}/>
+            }
             
             <div id="mint-phase-container" className="flex flex-col gap-y-4 pt-6">
                 <MintPhase candyMachine={candyMachine} launchDate={whitelistLaunchDate} phase={'Whitelist'}/>
