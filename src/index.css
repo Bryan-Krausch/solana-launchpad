@@ -2,3 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+body{
+    font-family: "Poppins";
+    background-image: url(./assets/bg.jpg);
+}

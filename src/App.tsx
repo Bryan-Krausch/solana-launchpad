@@ -1,6 +1,6 @@
 import { createDefaultAuthorizationResultCache, SolanaMobileWalletAdapter } from '@solana-mobile/wallet-adapter-mobile';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
-import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
+import { ConnectionProvider, useWallet, WalletProvider } from '@solana/wallet-adapter-react';
 import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import {
     GlowWalletAdapter,
@@ -10,8 +10,13 @@ import {
     TorusWalletAdapter,
 } from '@solana/wallet-adapter-wallets';
 import { clusterApiUrl } from '@solana/web3.js';
-import React, { FC, ReactNode, useMemo } from 'react';
+import React, { FC, ReactNode, useEffect, useMemo, useState } from 'react';
+import CandyMachine from './CandyMachine/CandyMachine';
+import MintContainerDesktopView from './components/desktopView/MintContainerDesktopView';
+import MintContainerMobileView from './components/mobileView/MintContainerMobileView';
 import WalletButton from './components/WalletButton';
+import bg from "./assets/bg.jpg"
+
 
 require('./App.css');
 require('@solana/wallet-adapter-react-ui/styles.css');
@@ -61,12 +66,29 @@ const Context: FC<{ children: ReactNode }> = ({ children }) => {
 };
 
 const Content: FC = () => {
+    const [completed, setCompleted] = useState(50)
+    const [candyMachine, setCandyMachine] = useState(null)
+    const [walletAddress, setWalletAddress] = useState(null)
+    const {publicKey} = useWallet()
+    const [whitelistLaunchDate, setWhitelistLaunchDate] = useState(process.env.REACT_APP_LAUNCH_EPOCH)
+
     return (
         <div className="App">
-            <div className='absolute top-4 right-10'>
-                <WalletButton />
+            <div className='absolute top-4 right-10 bg-indigo-900 rounded hidden lg:block'>
+                <WalletMultiButton />
+            </div>
+            <div className='absolute top-4 right-5 bg-plDarkGrey rounded block lg:hidden'>
+                {!publicKey && <WalletButton /> }
+            </div>
+            <CandyMachine walletAddress={publicKey} candyMachine={candyMachine} setCandyMachine={setCandyMachine}/> 
+
+            <div id='mobile-view' className='h-full w-full block lg:hidden'>
+                {candyMachine && <MintContainerMobileView completed={completed} setCompleted={setCompleted} candyMachine={candyMachine} walletAddress={publicKey} whitelistLaunchDate={whitelistLaunchDate} />}
             </div>
 
+            <div id='desktop-view' className='hidden lg:block w-[90%] h-[80%] absolute left-2/4 top-2/4 transform -translate-x-2/4 -translate-y-2/4 shadow-lg '>
+                {candyMachine && <MintContainerDesktopView completed={completed} setCompleted={setCompleted} candyMachine={candyMachine} walletAddress={publicKey} whitelistLaunchDate={whitelistLaunchDate} />}
+            </div>
         </div>
     );
 };

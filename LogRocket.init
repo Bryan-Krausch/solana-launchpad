@@ -1,0 +1,2 @@
+import LogRocket from 'logrocket';
+LogRocket.init('7swm3y/candymachine');

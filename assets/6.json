@@ -1,0 +1,53 @@
+{
+  "name": "MagiiK #6",
+  "symbol": "MK",
+  "image": "6.png",
+  "properties": {
+    "files": [
+      {
+        "uri": "6.png",
+        "type": "image/png"
+      }
+    ],
+    "creators": [
+      {
+        "address": "ArJP9SxRQgH4B2zdomn5pB6ZDUrP96YjJsD1wkU2xdbb",
+        "share": 100
+      }
+    ]
+  },
+  "attributes": [
+    {
+      "trait_type": "face",
+      "value": "face2"
+    },
+    {
+      "trait_type": "mouth",
+      "value": "m2"
+    },
+    {
+      "trait_type": "ears",
+      "value": "ears3"
+    },
+    {
+      "trait_type": "eyes",
+      "value": "eyes1"
+    },
+    {
+      "trait_type": "hair",
+      "value": "hair3"
+    },
+    {
+      "trait_type": "mouth",
+      "value": "m3"
+    },
+    {
+      "trait_type": "nose",
+      "value": "n1"
+    },
+    {
+      "trait_type": "access",
+      "value": "acc2"
+    }
+  ]
+}
