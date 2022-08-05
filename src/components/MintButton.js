@@ -6,7 +6,7 @@ export default class MintButton extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            userIsWhitelisted: null,
+            userIsWhitelisted: this.props.userIsWhitelisted,
             currentPhase: null,
             currentDate: new Date(),
             whitelistDate: new Date(process.env.REACT_APP_LAUNCH_EPOCH * 1000),
@@ -63,11 +63,19 @@ export default class MintButton extends React.Component{
                     </button>
                     )
                 case 'whitelist':
-                    return(
-                    <button className="bg-plGrey text-black rounded text-white w-[75%]  p-2 mt-5" onClick={() => mintToken(this.props.walletAddress, this.props.candyMachine)}>
-                        Mint NFT
-                    </button>
-                    )
+                    if(this.state.userIsWhitelisted){
+                        return(
+                        <button className="bg-plGrey text-black rounded text-white w-[75%]  p-2 mt-5" onClick={() => mintToken(this.props.walletAddress, this.props.candyMachine)}>
+                            Mint NFT
+                        </button>
+                        )
+                    }else{
+                        return(
+                        <button className="bg-plGrey text-black rounded text-white w-[75%]  p-2 mt-5" disabled>
+                            Your are not whitelisted
+                        </button>
+                        )
+                    }
                 default:
                     return(
                     <button className="bg-darkGrey rounded text-white w-[75%]  p-2 mt-5 border-plDarkYellow border-[1px]" disabled>

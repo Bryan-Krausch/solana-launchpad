@@ -5,10 +5,6 @@ export default function MintPhase({candyMachine, launchDate, phase}){
     const publicDropDate = new Date(candyMachine.state.goLiveData * 1000)
     const whitelistDropDate = new Date(launchDate * 1000)
 
-
-    console.log(publicDropDate);
-    console.log(whitelistDropDate);
-
     const renderWhitelist = candyMachine.state.isSoldOut ? "Sold out" : ((phase === 'Whitelist') && whitelistDropDate > currentDate) ? <CountdownTimer candyMachine={candyMachine} dropDate={whitelistDropDate} /> : "Live"
     const renderPublic = candyMachine.state.isSoldOut ? "Sold out" : ((phase === 'Public') && publicDropDate > currentDate) ? <CountdownTimer candyMachine={candyMachine} dropDate={publicDropDate} /> : "Live"
     return(

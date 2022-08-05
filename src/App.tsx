@@ -10,11 +10,10 @@ import {
     TorusWalletAdapter,
 } from '@solana/wallet-adapter-wallets';
 import { clusterApiUrl } from '@solana/web3.js';
-import React, { FC, ReactNode, useMemo, useState } from 'react';
+import React, { FC, ReactNode, useEffect, useMemo, useState } from 'react';
 import CandyMachine from './CandyMachine/CandyMachine';
 import MintContainerDesktopView from './components/desktopView/MintContainerDesktopView';
 import MintContainerMobileView from './components/mobileView/MintContainerMobileView';
-import WalletButton from './components/WalletButton';
 
 require('./App.css');
 require('@solana/wallet-adapter-react-ui/styles.css');
@@ -69,7 +68,25 @@ const Content: FC = () => {
     const [walletAddress, setWalletAddress] = useState(null)
     const {publicKey} = useWallet()
     const [whitelistLaunchDate, setWhitelistLaunchDate] = useState(process.env.REACT_APP_LAUNCH_EPOCH)
+    const [userIsWhitelisted, setIsWhitelisted] = useState(false)
+    let data = require('./whitelistAddress.json')
 
+    useEffect(() => {
+        if(publicKey !== null){
+            let currentAddress = publicKey.toString()
+            
+            for(var i = 0; i < data.length; i++){
+                if(currentAddress === data[i]){
+                    setIsWhitelisted(true)
+                }
+                return
+            }
+            setIsWhitelisted(false)
+        }
+    }, [publicKey])
+
+    
+    
     return (
         <div className="App">
             {/* Desktop wallet connection */}
@@ -77,17 +94,28 @@ const Content: FC = () => {
                 <WalletMultiButton />
             </div>
 
-            {/* Mobile Wallet */}
-            {/* <WalletButton />  */}
-
             <CandyMachine walletAddress={publicKey} candyMachine={candyMachine} setCandyMachine={setCandyMachine}/> 
 
             <div id='mobile-view' className='h-full w-full block lg:hidden'>
-                {candyMachine && <MintContainerMobileView completed={completed} setCompleted={setCompleted} candyMachine={candyMachine} walletAddress={publicKey} whitelistLaunchDate={whitelistLaunchDate} />}
+                {candyMachine && <MintContainerMobileView 
+                                    completed={completed} 
+                                    setCompleted={setCompleted} 
+                                    candyMachine={candyMachine} 
+                                    walletAddress={publicKey} 
+                                    whitelistLaunchDate={whitelistLaunchDate} 
+                                    userIsWhitelisted={userIsWhitelisted}
+                                  />}
             </div>
 
             <div id='desktop-view' className='hidden lg:block w-[90%] h-[80%] absolute left-2/4 top-2/4 transform -translate-x-2/4 -translate-y-2/4 shadow-lg '>
-                {candyMachine && <MintContainerDesktopView completed={completed} setCompleted={setCompleted} candyMachine={candyMachine} walletAddress={publicKey} whitelistLaunchDate={whitelistLaunchDate} />}
+                {candyMachine && <MintContainerDesktopView 
+                                    completed={completed} 
+                                    setCompleted={setCompleted} 
+                                    candyMachine={candyMachine} 
+                                    walletAddress={publicKey} 
+                                    whitelistLaunchDate={whitelistLaunchDate} 
+                                    userIsWhitelisted={userIsWhitelisted}
+                                    />}
             </div>
         </div>
     );

@@ -8,7 +8,7 @@ import { mintToken } from "../../libs/Mint"
 import MintButton from "../MintButton"
 
 
-export default function MintContainerMobileView({completed, setCompleted, candyMachine, walletAddress, whitelistLaunchDate}){
+export default function MintContainerMobileView({completed, setCompleted, candyMachine, walletAddress, whitelistLaunchDate, userIsWhitelisted}){
     const [active, setActive] = useState(0)
 
     useEffect(() => {
@@ -37,7 +37,6 @@ export default function MintContainerMobileView({completed, setCompleted, candyM
 
     const currentDate = new Date()
     const dropDate = new Date(candyMachine.state.goLiveData * 1000)
-    
 
     return(
         <div className="h-full w-full bg-plBlack overflow-y-auto p-10 flex gap-x-10 rounded bg-opacity-100">
@@ -67,7 +66,7 @@ export default function MintContainerMobileView({completed, setCompleted, candyM
                         </button>
                     </div>
                     :
-                    <MintButton walletAddress={walletAddress} candyMachine={candyMachine}/>
+                    <MintButton walletAddress={walletAddress} candyMachine={candyMachine} userIsWhitelisted={userIsWhitelisted}/>
                 }
             </div>
             <div className="pt-5 flex flex-col items-center w-[30%]">

@@ -7,7 +7,7 @@ import MintPhase from "../MintPhase"
 import MintButton from "../MintButton"
 
 
-export default function MintContainerMobileView({completed, setCompleted, candyMachine, walletAddress, whitelistLaunchDate}){
+export default function MintContainerMobileView({completed, setCompleted, candyMachine, walletAddress, whitelistLaunchDate, userIsWhitelisted}){
     const [active, setActive] = useState(0)
 
     useEffect(() => {
@@ -70,7 +70,7 @@ export default function MintContainerMobileView({completed, setCompleted, candyM
                     </button>
                 </div>
                 :
-                <MintButton walletAddress={walletAddress} candyMachine={candyMachine}/>
+                <MintButton walletAddress={walletAddress} candyMachine={candyMachine} userIsWhitelisted={userIsWhitelisted}/>
             }
             
             <div id="mint-phase-container" className="flex flex-col gap-y-4 pt-6">
