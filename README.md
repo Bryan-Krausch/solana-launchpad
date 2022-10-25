@@ -3,8 +3,9 @@
 
 A free Solana Launchpad Fully customizable
 
+![alt text](https://i.ibb.co/S5vBXWL/website.png)
 
-![Logo](https://www.logosvgpng.com/wp-content/uploads/2021/12/solana-logo-vector.png)
+![alt text](https://i.ibb.co/8NrD1KD/website2.png)
 
 
 ## Steps
@@ -190,9 +191,6 @@ Import each Json and image replace with all your data and your treasury wallet a
 - Check if the collection was well uploaded `ts-node C:/Users/kraus/metaplex/js/packages/cli/src/candy-machine-v2-cli.ts verify_upload -e devnet -k ~/.config/solana/devnet.json`
 - If it need a redeploy do : `ts-node C:/Users/kraus/metaplex/js/packages/cli/src/candy-machine-v2-cli.ts update_candy_machine -e devnet -k ~/.config/solana/devnet.json -cp config.json`
 
-# Demo
-![alt text](https://i.ibb.co/S5vBXWL/website.png)
 
-![alt text](https://i.ibb.co/8NrD1KD/website2.png)
 
 
