@@ -7,12 +7,14 @@ import {
     getNetworkToken,
     CIVIC
   } from "../CandyMachine/helpers";
+
+  import { Metaplex, keypairIdentity } from "@metaplex-foundation/js";
   
   import { sendTransactions } from '../CandyMachine/connection';
 
   import { MintLayout, TOKEN_PROGRAM_ID, Token } from '@solana/spl-token';
   
-  import { PublicKey } from '@solana/web3.js';
+  import { PublicKey, Connection, Keypair } from '@solana/web3.js';
   
   import { web3 } from '@project-serum/anchor';
   
@@ -293,3 +295,18 @@ export const mintToken = async (walletAddress, candyMachine) => {
     }
     return [];
   };
+
+  // export const getAllNFTByUser = async() => {
+  //   const connection = new Connection("https://explorer-api.devnet.solana.com")
+  //   const keypair = Keypair.generate()
+
+  //   const metaplex = new Metaplex(connection)
+  //   metaplex.use(keypairIdentity(keypair))
+
+  //   const owner = new PublicKey("ArJP9SxRQgH4B2zdomn5pB6ZDUrP96YjJsD1wkU2xdbb")
+  //   const allNFTs = await metaplex.nfts().findAllByOwner(owner)
+
+  //   return(
+  //       allNFTs
+  //   )
+// }

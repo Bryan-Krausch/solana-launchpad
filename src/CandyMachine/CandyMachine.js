@@ -51,14 +51,7 @@ const CandyMachine = ({ walletAddress, candyMachine, setCandyMachine }) => {
       (!candyMachine.data.goLiveDate || candyMachine.data.goLiveDate.toNumber() > new Date().getTime() / 1000)
       
       const goLiveDateTimeString = `${new Date(goLiveData * 1000).toGMTString()}`
-      console.log({
-        itemsAvailable,
-        itemsRedeemed,
-        itemsRemaining,
-        goLiveData,
-        goLiveDateTimeString,
-        presale
-      })
+      console.log(candyMachine)
       
     setCandyMachine({
       id: process.env.REACT_APP_CANDY_MACHINE_ID,

@@ -63,6 +63,7 @@ const Context: FC<{ children: ReactNode }> = ({ children }) => {
 };
 
 const Content: FC = () => {
+    
     const [completed, setCompleted] = useState(50)
     const [candyMachine, setCandyMachine] = useState(null)
     const [walletAddress, setWalletAddress] = useState(null)
@@ -71,20 +72,21 @@ const Content: FC = () => {
     const [userIsWhitelisted, setIsWhitelisted] = useState(false)
     let data = require('./whitelistAddress.json')
 
+    // getAllNFTByUser()
+
     useEffect(() => {
         if(publicKey !== null){
             let currentAddress = publicKey.toString()
-            
+        
             for(var i = 0; i < data.length; i++){
                 if(currentAddress === data[i]){
                     setIsWhitelisted(true)
+                    return
                 }
-                return
             }
             setIsWhitelisted(false)
         }
     }, [publicKey])
-
     
     
     return (

@@ -1,46 +1,198 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Solana Launchpad
 
-## Available Scripts
+A free Solana Launchpad Fully customizable
 
-In the project directory, you can run:
 
-### `npm start`
+![Logo](https://www.logosvgpng.com/wp-content/uploads/2021/12/solana-logo-vector.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Steps
 
-### `npm test`
+ - Create a Treasury Wallet
+ - Create the SPL Token
+ - Create and set the whitelist on the gumdrop
+ - Create the gumdrop machine
+ - Create the NFT Assets
+ - Create the CandyMachine and upload the assets
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Documentation
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# 1 Create a Treasury Wallet
+```shell
+  solana config set --url $URL    
+```
+```shell
+  solana-keygen new --outfile ~/.config/solana/devnet.json
+```
+```shell
+  solana config set --keypair $KEYPAIR_Path    
+```
+Airdrop 2 Solana on the account
+```shell
+  solana airdrop 2
+```
+If you missed your publick key you can run
+```shell
+  solana-keygen pubkey
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# 2 Create the SPL Token
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```shell
+  spl-token create-token --decimals 0
+```
+Save somewhere your new token
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```shell
+  export SPL_TOKEN="<YOUR NEW TOKEN JUST CREATED>"
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Mint the token newly created 
+```shell
+  spl-token create-account $SPL_TOKEN"
+```
+```shell
+  spl-token mint $SPL_TOKEN token_supply
+```
+Disable mint when mint is done
+```shell
+  spl-token authorize $SPL_TOKEN mint --disable
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+# 3 Create and set the whitelist on the gumdrop
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+Create whitelist.json file
+```json
+[
+  {
+    "handle": "<USER WALLET>",
+    "amount": 1
+  }
+]
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# 4 Create the gumdrop machine
+Run this command on your shell and replace with your data
+```shell
+ts-node C:\Users\kraus\metaplex\js\packages\cli\src\gumdrop-cli.ts create 
+--env $network --keypair $KEYPAIR --rpc-url $RPC --claim-integration 
+"transfer" --transfer-mint $SPL_TOKEN --distribution-method "wallets" 
+--otp-auth "disable" --distribution-list $WHITELIST
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# 5 Create assets
+## NFT Assets
+
+Create the directory assets in the root folder
+
+Import each Json and image replace with all your data and your treasury wallet address
+
+```json
+{
+  "name": "MagiiK #0",
+  "symbol": "MK",
+	"description": "",
+  "image": "0.png",
+  "properties": {
+    "files": [
+      {
+        "uri": "0.png",
+        "type": "image/png"
+      }
+    ],
+    "creators": [
+      {
+        "address": "ArJP9SxRQgH4B2zdomn5pB6ZDUrP96YjJsD1wkU2xdbb",
+        "share": 100
+      }
+    ]
+  },
+  "attributes": [
+    {
+      "trait_type": "face",
+      "value": "face2"
+    },
+    {
+      "trait_type": "mouth",
+      "value": "m2"
+    },
+    {
+      "trait_type": "ears",
+      "value": "ears3"
+    },
+    {
+      "trait_type": "eyes",
+      "value": "eyes1"
+    },
+    {
+      "trait_type": "hair",
+      "value": "hair3"
+    },
+    {
+      "trait_type": "mouth",
+      "value": "m3"
+    },
+    {
+      "trait_type": "nose",
+      "value": "n1"
+    },
+    {
+      "trait_type": "access",
+      "value": "acc2"
+    }
+  ]
+}
+```
+
+## Create config.json
+```json
+{
+  "price": 0.5,
+  "number": 10,
+  "gatekeeper": null,
+  "solTreasuryAccount": "<YOUR WALLET ADDRESS>",
+  "splTokenAccount": null,
+  "splToken": null,
+  "goLiveDate": "30 Jan 2022 00:00:00 UTC",
+  "endSettings": null,
+  "whitelistMintSettings": {
+    "mode": {
+      "burnEveryTime": true
+    },
+    "mint": "<SPL TOKEN>",
+    "presale": true,
+    "discountPrice": 0.33
+  },
+  "hiddenSettings": null,
+  "storage": "arweave",
+  "ipfsInfuraProjectId": null,
+  "ipfsInfuraSecret": null,
+  "awsS3Bucket": null,
+  "noRetainAuthority": false,
+  "noMutable": false
+}
+```
+# 6 Create the CandyMachine and upload the assets
+## CandyMachine
+
+- Go in the root folder
+- Generate new keypair `solana-keygen new --outfile ~/.config/solana/devnet.json`
+- Set new keypair as default `solana config set --keypair ~/.config/solana/devnet.json`
+- Add treasury on the candyMachine `solana airdrop 2`
+
+## Upload assets in the Candy Machine
+
+- Upload nft `ts-node C:/Users/kraus/metaplex/js/packages/cli/src/candy-machine-v2-cli.ts upload -e devnet -k ~/.config/solana/devnet.json -cp config.json ./assets` DONT FORGET TO CHANGE TO THE RIGHT RPC
+- Check if the collection was well uploaded `ts-node C:/Users/kraus/metaplex/js/packages/cli/src/candy-machine-v2-cli.ts verify_upload -e devnet -k ~/.config/solana/devnet.json`
+- If it need a redeploy do : `ts-node C:/Users/kraus/metaplex/js/packages/cli/src/candy-machine-v2-cli.ts update_candy_machine -e devnet -k ~/.config/solana/devnet.json -cp config.json`
+
+# Demo
+![alt text](https://i.ibb.co/S5vBXWL/website.png)
+
+![alt text](https://i.ibb.co/8NrD1KD/website2.png)
+
+
